@@ -1,0 +1,27 @@
+
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+
+public class GameWindow extends JFrame {
+
+    public void SimpleEx() {
+
+        initUI();
+    }
+
+    private void initUI() {
+        
+        setTitle("Simple example");
+        setSize(300, 200);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    public static void main(String[] args) {
+
+        EventQueue.invokeLater(() -> {
+        	GameWindow gw = new GameWindow();
+            gw.setVisible(true);
+        });
+    }
+}

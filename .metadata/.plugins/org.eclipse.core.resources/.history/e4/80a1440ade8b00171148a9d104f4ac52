@@ -1,0 +1,20 @@
+
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+
+public class GameWindow extends JFrame {
+
+    public GameWindow() {
+
+        initUI();
+    }
+
+    private void initUI() {
+        
+        setTitle("Game Window");
+        setSize(500, 500);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+}

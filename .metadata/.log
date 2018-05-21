@@ -1,0 +1,32 @@
+!SESSION 2017-08-28 02:56:36.595 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_131
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2017-08-28 03:52:29.686
+!MESSAGE No repository found at file:/C:/Users/John/eclipse/java-neon/eclipse/plugins/.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2017-08-28 03:52:34.684
+!MESSAGE No repository found at https://eclipse.org/windowbuilder/download.php.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2017-08-28 03:52:35.071
+!MESSAGE No repository found at file:/C:/Users/John/eclipse/java-neon/eclipse/plugins/WindowBuilder/.
+!SESSION 2017-08-28 12:50:24.331 -----------------------------------------------
+eclipse.buildId=4.6.3.M20170301-0400
+java.version=1.8.0_131
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2017-08-28 13:45:58.555
+!MESSAGE No repository found at file:/C:/Users/John/eclipse/java-neon/eclipse/plugins/.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2017-08-28 13:46:03.603
+!MESSAGE No repository found at https://eclipse.org/windowbuilder/download.php.
+
+!ENTRY org.eclipse.equinox.p2.metadata.repository 4 1000 2017-08-28 13:46:03.909
+!MESSAGE No repository found at file:/C:/Users/John/eclipse/java-neon/eclipse/plugins/WindowBuilder/.

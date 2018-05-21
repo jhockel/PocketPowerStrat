@@ -1,0 +1,20 @@
+
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+
+public class CharacterBuildWindow extends JFrame {
+
+    public CharacterBuildWindow() {
+
+        initUI();
+    }
+
+    private void initUI() {
+        
+        setTitle("Launch Window");
+        setSize(500, 500);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+}
