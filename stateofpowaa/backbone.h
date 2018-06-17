@@ -19,15 +19,15 @@ enum bb {
     
     phys_arm,       // 10
     mag_arm,        // 11
-    arm_arm,        // 12
+    true_arm,       // 12
     
     phys_blk,       // 13
     mag_blk,        // 14
-    blk_blk,        // 15
+    true_blk,       // 15
     
     phys_evas,      // 16
     mag_evas,       // 17
-    evas_evas,      // 18
+    true_evas,      // 18
     
     random          // 19
 };
