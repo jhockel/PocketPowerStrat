@@ -11,12 +11,12 @@ SOURCE="main.cpp character.cpp"
 all : app
   
 # Link the object files into a binary
-app : main.o
-	$(LINK) -o app $(OBJ) -lstdc++
+# app : main.o
+#	$(LINK) -o app $(OBJ) -lstdc++
   
 # Compile the source files into object files
-main.o : main.cpp
-	$(CC) -c $(SOURCE) -o $(OBJ)
+app : main.cpp
+	$(CC) $(SOURCE) -o sop.exe
   
 # Clean target
 .PHONY : clean
