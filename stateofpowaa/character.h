@@ -5,7 +5,13 @@
 class character {
 public:
 
-    backbone bb();
+    // Name
+    // Sprite
+    
+    backbone b();
     int health;
+    
+    // Vector of mods
+    
 
 };

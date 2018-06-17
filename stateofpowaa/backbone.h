@@ -32,33 +32,33 @@ enum bb {
     random          // 19
 };
 static int conversion[BB_SIZE] = {
-10,    // health,         // 0
-2,     // health_regen,   // 1
+10,    // health,         
+2,     // health_regen,
     
-10,    // mana,           // 2
-4,     // mana_regen,     // 3
-1,     // mana_color,     // 4
-1,     // mana_weight,    // 5
+10,    // mana,
+4,     // mana_regen,
+1,     // mana_color,
+1,     // mana_weight,
     
-5,     // attk,           // 6
-1,     // attk_splash,    // 7
-1,     // attk_splash_type,//8
+5,     // attk,
+1,     // attk_splash,
+1,     // attk_splash_type,
     
-1,     // move,           // 9
+1,     // move,
     
-2,     // phys_arm,       // 10
-2,     // mag_arm,        // 11
-1,     // arm_arm,        // 12
+2,     // phys_arm,
+2,     // mag_arm,
+1,     // arm_arm,
     
-2,     // phys_blk,       // 13
-2,     // mag_blk,        // 14
-1,     // blk_blk,        // 15
+2,     // phys_blk,
+2,     // mag_blk,
+1,     // blk_blk,
     
-2,     // phys_evas,      // 16
-2,     // mag_evas,       // 17
-1,     // evas_evas,      // 18
+2,     // phys_evas,
+2,     // mag_evas,
+1,     // evas_evas,
     
-1     // random          // 19
+1      // random
 };
 
 class backbone {
