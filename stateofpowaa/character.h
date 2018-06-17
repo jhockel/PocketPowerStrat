@@ -6,6 +6,6 @@ class character {
 public:
 
     backbone bb();
-    backbone gbb();
+    int health;
 
 };
