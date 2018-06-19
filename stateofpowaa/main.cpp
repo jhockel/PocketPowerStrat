@@ -11,12 +11,17 @@ using std::printf;
 int main()
 {
 	
-    character matt();
+    character matt;
     
     
     printf("SABA \n");
-    printf("definite progress\n");
-    
+    printf("sa %d\n", matt.getPower(health));
+    printf("sa %d\n", matt.getPower(health_regen));
+    printf("sa %d\n", matt.getPower(attk_splash));
+    printf("sa %d\n", matt.getPower(phys_blk));
+    printf("sa %d\n", matt.getPower(mag_blk));
+    printf("sa %d\n", matt.getPower(true_blk));
+    printf("Total: %d\n", matt.b.getTotalPower());
     
     
     

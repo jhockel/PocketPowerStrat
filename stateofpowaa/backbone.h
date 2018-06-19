@@ -66,9 +66,9 @@ public:
 
     int power[BB_SIZE];
     
-    
+    backbone() {for(int i = 0; i < BB_SIZE; i++) power[i]=0; };
     int getTrue(bb stat) {return (power[stat]*conversion[stat]); };
     int getPower(bb stat) {return power[stat]; };
-    int getTotalPower() {int r; for(int i = 0; i < BB_SIZE; i++) r += power[i]; return r; };
+    int getTotalPower() {int r = 0; for(int i = 0; i < BB_SIZE; i++) r += power[i]; return r; };
 
 };
