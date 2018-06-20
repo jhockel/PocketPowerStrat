@@ -1,4 +1,6 @@
 // FILE: backbone.h
+#ifndef BACKBONE
+#define BACKBONE
 
 #define BB_SIZE 20
 
@@ -29,7 +31,7 @@ enum bb {
     mag_evas,       // 17
     true_evas,      // 18
     
-    random          // 19
+    rand_roll       // 19
 };
 static int conversion[BB_SIZE] = {
 10,    // health,         
@@ -58,7 +60,7 @@ static int conversion[BB_SIZE] = {
 2,     // mag_evas,
 1,     // evas_evas,
     
-1      // random
+1      // rand_roll
 };
 
 class backbone {
@@ -72,3 +74,6 @@ public:
     int getTotalPower() {int r = 0; for(int i = 0; i < BB_SIZE; i++) r += power[i]; return r; };
 
 };
+
+
+#endif

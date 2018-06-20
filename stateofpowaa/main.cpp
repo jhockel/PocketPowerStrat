@@ -6,6 +6,9 @@ using std::printf;
 
 #include "character.h"
 
+#include "excelio.h"
+using namespace libxlio;
+
 
 
 int main()
@@ -13,6 +16,7 @@ int main()
 	
     character matt;
     
+    matt.b.power[0] = 100;
     
     printf("SABA \n");
     printf("sa %d\n", matt.getPower(health));

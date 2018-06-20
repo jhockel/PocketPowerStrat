@@ -1,4 +1,6 @@
 // FILE: character.h
+#ifndef CHARACTER
+#define CHARACTER
 
 #include "backbone.h"
 
@@ -20,3 +22,5 @@ public:
     int getTrue(bb);
     int getTotalPower();
 };
+
+#endif
