@@ -3,22 +3,27 @@
 #ifndef EXCELIO
 #define EXCELIO
 
-
 #include "libxl.h"
 using namespace libxl;
-
 #include "character.h"
+#include <string>
+using std::string;
 
-namespace libxlio {
+class libxlio {
+
+public:    
+    // Excel Interaction Functions:
+    static int openGameBook();
+    static void closeGameBook(bool);
     
-    int readinchar();
-    int readinspell();
+    static int readinchar();
+    static int readinspell();
     
-    int drawspace(character&, int, int);
-    int clearspace(int, int);
+    static int drawspace(character&, int, int);
+    static int clearspace(int, int);
     
-    void drawboard();
+    static void drawboard();
     
-}
+};
 
 #endif

@@ -5,30 +5,30 @@
 # Also I didnt use any fancy options. Just compiles. Oh well. 
 
 # Specify compiler
-CC=gcc
+CC=g++
   
 # Specify linker
-# LINK=gcc
+LINK=g++
 
-INC_DIR=G:\Code\libxl-3.8.2.0\include_cpp
-LIB_DIR=G:\Code\libxl-3.8.2.0\lib
-LIB=xl.lib
+INC_DIR=lib/include_cpp
+LIB=xl
 
 # OBJ="main.o character.o"
-SOURCE="main.cpp character.cpp excelio.cpp"
+SOURCE=main.cpp character.cpp excelio.cpp
+OBJS=$(SOURCE:.cpp=.o)
   
 .PHONY : all
 all : app
   
 # Link the object files into a binary
-# app : main.o
-#	$(LINK) -o app $(OBJ) -lstdc++
+app : $(OBJS)
+	$(LINK) $^ -L. -l$(LIB) -lstdc++ -o sop.exe
   
 # Compile the source files into object files
-app : main.cpp
-	$(CC) -Wall -I$(INC_DIR) -L$(LIB_DIR) $(SOURCE) -l$(LIB) -o sop.exe
+$(OBJS) : $(SOURCE)
+	$(CC) -Wall -o $@ -c $*.cpp -I$(INC_DIR)
   
 # Clean target
 .PHONY : clean
 clean :
-	rm sop.exe
+	rm -f $(OBJS) sop.exe

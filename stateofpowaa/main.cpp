@@ -1,15 +1,11 @@
 // FILE: main.cpp
 // This file serves as 'void main()' for the EXCEL implimentation of gameplay
 
-#include "stdio.h"
-using std::printf;
+#include <stdio.h>
+//using std::printf;
 
 #include "character.h"
-
 #include "excelio.h"
-using namespace libxlio;
-
-
 
 int main()
 {
@@ -27,7 +23,13 @@ int main()
     printf("sa %d\n", matt.getPower(true_blk));
     printf("Total: %d\n", matt.b.getTotalPower());
     
+    if(!libxlio::openGameBook()) {printf("Error opeing game.xlsx file -- exiting\n\n"); return 0;}
+    printf("Game Book was opened successfully\n");
+    
+    libxlio::drawboard();
     
     
+    libxlio::closeGameBook(true);
+	return 1;
 }
 
