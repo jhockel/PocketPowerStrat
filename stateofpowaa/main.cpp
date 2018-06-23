@@ -4,8 +4,10 @@
 #include <stdio.h>
 //using std::printf;
 
+#include "gamedata.h"
 #include "character.h"
 #include "excelio.h"
+
 
 int main()
 {

@@ -2,7 +2,7 @@
 #ifndef BACKBONE
 #define BACKBONE
 
-#define BB_SIZE 20
+#define BB_SIZE 21
 
 enum bb {
     health,         // 0
@@ -31,7 +31,8 @@ enum bb {
     mag_evas,       // 17
     true_evas,      // 18
     
-    rand_roll       // 19
+    speed,          // 19
+    rand_roll       // 20
 };
 static int conversion[BB_SIZE] = {
 10,    // health,         
@@ -59,7 +60,8 @@ static int conversion[BB_SIZE] = {
 2,     // phys_evas,
 2,     // mag_evas,
 1,     // evas_evas,
-    
+
+1,     // speed
 1      // rand_roll
 };
 
