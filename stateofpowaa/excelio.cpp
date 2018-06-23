@@ -55,8 +55,23 @@ int libxlio::readinspell() {
 }
     
 int libxlio::drawspace(character& c, int x, int y) {
-    
-    return 0;
+    int row = TLcR(x,y);
+    int col = TLcC(x,y);
+    gamePage->writeStr(row,col,c.name.c_str());
+    gamePage->writeNum(row,col+2,c.getTotalPower());
+    gamePage->writeStr(row+1,col,"HP");
+    gamePage->writeNum(row+1,col+1,(double)c.health/(double)c.getTrue(health));
+    gamePage->writeNum(row+1,col+2,c.health);
+    gamePage->writeNum(row+1,col+3,c.getTrue(health));
+    gamePage->writeStr(row+2,col,"MANA");
+    gamePage->writeNum(row+2,col+1,(double)c.mana/(double)c.getTrue(mana));
+    gamePage->writeNum(row+2,col+2,c.mana);
+    gamePage->writeNum(row+2,col+3,c.getTrue(mana));
+    gamePage->writeStr(row+3,col+2,"ATTK");
+    gamePage->writeNum(row+3,col+3,c.getTrue(attk));
+    gamePage->writeStr(row+4,col+2,"MV");
+    gamePage->writeNum(row+4,col+3,c.getTrue(move));
+    return 1;
 }
 int libxlio::clearspace(int x, int y) {
     

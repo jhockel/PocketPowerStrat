@@ -17,3 +17,7 @@ int character::getTrue(bb stat){
 int character::getTotalPower(){
     return b.getTotalPower();
 }
+
+void character::setPower(bb stat, int p) {
+    b.power[stat] = p;
+}

@@ -3,15 +3,17 @@
 #define CHARACTER
 
 #include "backbone.h"
+#include <string>
+using std::string;
 
 class character {
 public:
 
-    // Name
+    string name;
     // Sprite
-    
     backbone b;
     int health;
+    int mana;
     
     // Vector of mods
     
@@ -21,6 +23,7 @@ public:
     int getPower(bb);
     int getTrue(bb);
     int getTotalPower();
+    void setPower(bb,int);
 };
 
 #endif
