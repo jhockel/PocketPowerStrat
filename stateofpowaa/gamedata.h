@@ -3,6 +3,7 @@
 #define GAMEDATA
 
 #include "character.h"
+#include "space.h"
 #include <vector>
 using std::vector;
 
@@ -14,7 +15,7 @@ public:
 vector<character> teamA;
 vector<character> teamB;
 
-character* board[BOARD_SIZE][BOARD_SIZE];
+space board[BOARD_SIZE][BOARD_SIZE];
 
 
 };

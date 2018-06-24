@@ -14,22 +14,26 @@ using namespace libxl;
 // SPACE SIZE:          4x8 cells
 // DEFAULT BOARD SIZE:  4x4 spaces
 
-// For Draw Space X,Y:
+// For Draw Space y,x:
 // Xe = Y%2? X0 + 4*X : X0 + 2 + 4*X%2
 // Ye = Y0 + Y*8
 
-// To Move from X,Y:
+// To Move from y,x:
 // dX: +/-1
 // dY: Y%2? X=X|X-1 : X|X+1
+
+// Macros for the metrics: TLcR returns TOP LEFT CORNERS ROW, TLcC returns COL
+#define TLcR(RX,RY) (6+RY*8)
+#define TLcC(RX,RY) (RY%2 ? 8+RX*4 : 6+RX*4)
     
 // // LibXL Constants:
 const string GameBoard("Gameplay/game.xlsx");
 const string GameSheet("GameBoard");
+const string teamAbook("teamA.xlsx");
+const string teamBbook("teamB.xlsx");
+
 Book* gameBook = NULL;
 Sheet* gamePage = NULL;
-
-#define TLcR(RY,RX) (6+RY*8)
-#define TLcC(RY,RX) (RY%2 ? 8+RX*4 : 6+RX*4)
 
 // Excel Interaction Implimentations
 
@@ -55,8 +59,8 @@ int libxlio::readinspell() {
 }
     
 int libxlio::drawspace(character& c, int x, int y) {
-    int row = TLcR(x,y);
-    int col = TLcC(x,y);
+    int row = TLcR(y,x);
+    int col = TLcC(y,x);
     gamePage->writeStr(row,col,c.name.c_str());
     gamePage->writeNum(row,col+2,c.getTotalPower());
     gamePage->writeStr(row+1,col,"HP");
@@ -102,6 +106,7 @@ void libxlio::drawboard() {
     BRc->setBorderRight(BORDERSTYLE_THICK);
     
     gamePage->setCol(0,30,5.5);
+    
     // First, draw outer boarder 
     // Top Left corner: (8,4)
     // 5.5x5 spaces:
@@ -123,18 +128,25 @@ void libxlio::drawboard() {
     
     for(int x = 0; x<4; x++)
         for(int y = 0; y<4; y++) {
-            gamePage->writeBlank(TLcR(x,y),TLcC(x,y),TLc);
-            gamePage->writeBlank(TLcR(x,y),TLcC(x,y)+3,TRc);
-            gamePage->writeBlank(TLcR(x,y)+7,TLcC(x,y),BLc);
-            gamePage->writeBlank(TLcR(x,y)+7,TLcC(x,y)+3,BRc);
+            int row = TLcR(y,x);
+            int col = TLcC(y,x);
+            gamePage->writeBlank(row,col,TLc);
+            gamePage->writeBlank(row,col+3,TRc);
+            gamePage->writeBlank(row+7,col,BLc);
+            gamePage->writeBlank(row+7,col+3,BRc);
             for(int z = 1; z<3; z++){
-                gamePage->writeBlank(TLcR(x,y),TLcC(x,y)+z,topB);
-                gamePage->writeBlank(TLcR(x,y)+7,TLcC(x,y)+z,bottomB);
+                gamePage->writeBlank(row,col+z,topB);
+                gamePage->writeBlank(row+7,col+z,bottomB);
             }
             for(int z = 1; z<7; z++){
-                gamePage->writeBlank(TLcR(x,y)+z,TLcC(x,y),leftB);
-                gamePage->writeBlank(TLcR(x,y)+z,TLcC(x,y)+3,rightB);
+                gamePage->writeBlank(row+z,col,leftB);
+                gamePage->writeBlank(row+z,col+3,rightB);
             }
+            const string xx(1,(65+x));
+            const string yy(1,(49+y));
+            string s;
+            s = xx + yy;
+            gamePage->writeStr(row+7,col,s.c_str());
         }
     
 }
