@@ -1,4 +1,5 @@
-// File: Excel Wrapper for Game
+// File: excelio.h
+// Excel Wrapper for Game
 // Purpose: Handle all Excel interaction for simulated gameplay
 #ifndef EXCELIO
 #define EXCELIO

@@ -21,6 +21,7 @@ public:
     // Member Functions and Accessors
     character();
     int getPower(bb);
+    int getPower(pb);
     int getTrue(bb);
     int getTotalPower();
     void setPower(bb,int);

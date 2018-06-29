@@ -25,6 +25,7 @@ int main()
     
     printf("SABA \n");
     printf("sa %d\n", matt.getPower(health));
+    printf("sa %d\n", matt.getTrue(health));
     printf("sa %d\n", matt.getPower(health_regen));
     printf("sa %d\n", matt.getPower(attk_splash));
     printf("sa %d\n", matt.getPower(phys_blk));

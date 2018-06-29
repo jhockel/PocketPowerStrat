@@ -14,7 +14,7 @@ INC_DIR=lib/include_cpp
 LIB=xl
 
 # OBJ="main.o character.o"
-SOURCE=main.cpp character.cpp excelio.cpp
+SOURCE=main.cpp character.cpp backbone.cpp excelio.cpp
 OBJS=$(SOURCE:.cpp=.o)
   
 .PHONY : all

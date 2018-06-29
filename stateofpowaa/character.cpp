@@ -9,6 +9,9 @@ character::character() {
 int character::getPower(bb stat){
     return b.getPower(stat);
 }
+int character::getPower(pb stat){
+    return b.getPower(stat);
+}
 
 int character::getTrue(bb stat){
     return b.getTrue(stat);
