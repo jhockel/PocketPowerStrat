@@ -3,7 +3,7 @@
 #define BACKBONE
 
 #define BB_SIZE 13
-#define PB_SIZE 5
+#define PB_SIZE 6
 #define SB_SIZE 3
 
 enum bb {
@@ -33,8 +33,9 @@ enum pb {
     true_arm,       // 2 %% PERCENT
     
     attk_splash,    // 3 %% PERCENT
+    attk_range,     // 4 %% PERCENT
     
-    speed           // 4 %% PERCENT
+    speed           // 5 %% PERCENT
 };
 enum sb {
     physique,       // 0 ## SCALAR: STRENGTH vs ACCURACY: attack SPLASH vs RANGE
@@ -46,16 +47,19 @@ enum sb {
 
 class backbone {
 public:
-
-    int power[BB_SIZE];
-    int perc[PB_SIZE];
-    double scale[SB_SIZE];
+// Members:
+    int power[BB_SIZE];     // Power Array for Base Stats
+    int perc[PB_SIZE];      // Power Array for Percentage Based stats
+    double scale[SB_SIZE];  // Array of cost scalars
     
+// Member Functions:
     backbone();
     int getTrue(bb stat);
-    int getPower(pb stat);
+    int getTrue(pb stat);
     double getScale(sb stat);
     int getPower(bb stat);
+    int getPower(pb stat);
+    int getBasePower();
     int getTotalPower();
 
 };

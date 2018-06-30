@@ -6,14 +6,15 @@
 
 # Specify compiler
 CC=g++
-  
+
 # Specify linker
 LINK=g++
 
 INC_DIR=lib/include_cpp
+CFLAGS=-Wall -std=c++11 -I$(INC_DIR)
 LIB=xl
+LFLAGS=-L. -l$(LIB) -lstdc++ 
 
-# OBJ="main.o character.o"
 SOURCE=main.cpp character.cpp backbone.cpp excelio.cpp
 OBJS=$(SOURCE:.cpp=.o)
   
@@ -22,11 +23,11 @@ all : app
   
 # Link the object files into a binary
 app : $(OBJS)
-	$(LINK) $^ -L. -l$(LIB) -lstdc++ -o sop.exe
+	$(LINK) $(LFLAGS) $^ -o sop.exe
   
 # Compile the source files into object files
 $(OBJS) : $(SOURCE)
-	$(CC) -Wall -o $@ -c $*.cpp -I$(INC_DIR)
+	$(CC) $(CFLAGS) -c $*.cpp -o $@
   
 # Clean target
 .PHONY : clean
