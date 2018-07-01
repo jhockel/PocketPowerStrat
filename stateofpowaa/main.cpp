@@ -38,6 +38,7 @@ int main()
     printf("\nPerc Check:\n");
     printf("true_arm:     %d, %f\n",    matt.getPower(true_arm), matt.getTrue(true_arm));
     printf("attk_range:   %d, %f\n",    matt.getPower(attk_range), matt.getTrue(attk_range));
+    printf("attk_splash:  %d  , %f\n",    matt.getPower(attk_splash), matt.getTrue(attk_splash));
     
     // if(!libxlio::openGameBook()) {printf("Error opeing game.xlsx file -- exiting\n\n"); return 0;}
     // printf("Game Book was opened successfully\n");
