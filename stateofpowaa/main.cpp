@@ -30,15 +30,15 @@ int main()
     
     printf("SABA \n");
     printf("Total: %d\n", matt.b.getTotalPower());
-    printf("health:       %d, %f\n",    matt.getPower(health), matt.getTrue(health));
-    printf("health_regen: %d, %f\n",    matt.getPower(health_regen), matt.getTrue(health_regen));
-    printf("mana:         %d, %f\n",    matt.getPower(mana), matt.getTrue(mana));
-    printf("mana_regen:   %d, %f\n",    matt.getPower(mana_regen), matt.getTrue(mana_regen));
+    printf("health:       %4d, %f\n",    matt.getPower(health), matt.getTrue(health));
+    printf("health_regen: %4d, %f\n",    matt.getPower(health_regen), matt.getTrue(health_regen));
+    printf("mana:         %4d, %f\n",    matt.getPower(mana), matt.getTrue(mana));
+    printf("mana_regen:   %4d, %f\n",    matt.getPower(mana_regen), matt.getTrue(mana_regen));
     
     printf("\nPerc Check:\n");
-    printf("true_arm:     %d, %f\n",    matt.getPower(true_arm), matt.getTrue(true_arm));
-    printf("attk_range:   %d, %f\n",    matt.getPower(attk_range), matt.getTrue(attk_range));
-    printf("attk_splash:  %d  , %f\n",    matt.getPower(attk_splash), matt.getTrue(attk_splash));
+    printf("true_arm:     %4d, %f\n",    matt.getPower(true_arm), matt.getTrue(true_arm));
+    printf("attk_range:   %4d, %f\n",    matt.getPower(attk_range), matt.getTrue(attk_range));
+    printf("attk_splash:  %4d, %f\n",    matt.getPower(attk_splash), matt.getTrue(attk_splash));
     
     // if(!libxlio::openGameBook()) {printf("Error opeing game.xlsx file -- exiting\n\n"); return 0;}
     // printf("Game Book was opened successfully\n");
