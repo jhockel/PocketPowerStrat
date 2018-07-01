@@ -22,6 +22,7 @@ int main()
     matt.setPower(move,200);
     
     matt.setPower(true_arm,400);
+    matt.setPower(attk_range,150);
     
     matt.name = "COOL NAME";
     matt.health = 600;
@@ -36,6 +37,7 @@ int main()
     
     printf("\nPerc Check:\n");
     printf("true_arm:     %d, %f\n",    matt.getPower(true_arm), matt.getTrue(true_arm));
+    printf("attk_range:   %d, %f\n",    matt.getPower(attk_range), matt.getTrue(attk_range));
     
     // if(!libxlio::openGameBook()) {printf("Error opeing game.xlsx file -- exiting\n\n"); return 0;}
     // printf("Game Book was opened successfully\n");
