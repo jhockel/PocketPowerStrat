@@ -13,8 +13,14 @@ int character::getPower(pb stat){
     return b.getPower(stat);
 }
 
-int character::getTrue(bb stat){
+double character::getTrue(bb stat){
     return b.getTrue(stat);
+}
+double character::getTrue(pb stat){
+    return b.getTrue(stat);
+}
+double character::getScale(sb stat){
+    return b.scale[stat];
 }
 
 int character::getTotalPower(){
@@ -23,4 +29,11 @@ int character::getTotalPower(){
 
 void character::setPower(bb stat, int p) {
     b.power[stat] = p;
+}
+void character::setPower(pb stat, int p) {
+    b.perc[stat] = p;
+}
+void character::setScale(sb stat, double s) {
+    if( (s < -1) | (s > 1) ) return;
+    b.scale[stat] = s;
 }

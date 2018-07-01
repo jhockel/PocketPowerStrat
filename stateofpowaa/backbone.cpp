@@ -5,54 +5,65 @@
 #include "backbone.h"
 #include <vector>
 using std::vector;
+#include <cmath>
+using namespace std;
+
+#include <stdio.h>
+#define CWB 1
 
 struct bb_scalar {
     sb scaler;
     double swing;
 };
-struct bb_cost {
-    double cost;
+struct bb_value {
+    double value;
     vector<bb_scalar> scalers;
+    bool integer_lock;
 };
 struct pb_scalar {
     sb scaler;
     double swing;
 };
-struct pb_cost {
-    double cost;
+struct pb_value {
+    double value;
     vector<pb_scalar> scalers;
+    bool integer_lock;
 };
 
-static bb_cost bb_conversion[BB_SIZE] = {
-    {5.0, vector<bb_scalar>()},     // health,         
-    {2.0, vector<bb_scalar>()},     // health_regen,
+static bb_value bb_conversion[BB_SIZE] = {
+    {5.0, vector<bb_scalar>(), true},     // health,         
+    {2.0, vector<bb_scalar>(), true},     // health_regen,
     
-    {2.0, vector<bb_scalar>()},     // mana,
-    {1.0, vector<bb_scalar>()},     // mana_regen,
+    {2.0, vector<bb_scalar>(), true},     // mana,
+    {1.0, vector<bb_scalar>(), true},     // mana_regen,
     
-    {3.0, vector<bb_scalar>()},     // attk,
+    {3.0, vector<bb_scalar>(), true},     // attk,
     
-    {0.01, vector<bb_scalar>()},     // move,
+    {0.01, vector<bb_scalar>(), true},     // move,
     
-    {2.0, vector<bb_scalar>()},     // phys_blk,
-    {2.0, vector<bb_scalar>()},     // mag_blk,
-    {1.0, vector<bb_scalar>()},     // blk_blk,
+    {2.0, vector<bb_scalar>(), false},     // phys_blk,
+    {2.0, vector<bb_scalar>(), false},     // mag_blk,
+    {1.0, vector<bb_scalar>(), false},     // blk_blk,
     
-    {2.0, vector<bb_scalar>()},     // phys_evas,
-    {2.0, vector<bb_scalar>()},     // mag_evas,
-    {1.0, vector<bb_scalar>()},     // evas_evas,
+    {2.0, vector<bb_scalar>(), false},     // phys_evas,
+    {2.0, vector<bb_scalar>(), false},     // mag_evas,
+    {1.0, vector<bb_scalar>(), false},     // evas_evas,
 
-    {1.0, vector<bb_scalar>()}      // rand_roll
+    {1.0, vector<bb_scalar>(), false}      // rand_roll
 };
-static pb_cost pb_conversion[PB_SIZE] = {
-    {2.0, vector<pb_scalar>()},    // phys_arm
-    {2.0, vector<pb_scalar>()},    // mag_arm
-    {1.0, vector<pb_scalar>()},    // true_arm
+static pb_value pb_conversion[PB_SIZE] = {
+    {4.0, vector<pb_scalar>(), false},     // phys_arm
+    {4.0, vector<pb_scalar>(), false},     // mag_arm
+    {2.0, vector<pb_scalar>(), false},     // true_arm
     
-    {1.0, vector<pb_scalar>{(pb_scalar){physique, 0.5}}},    // attk_splash
-    {1.0, vector<pb_scalar>{(pb_scalar){physique, 0.5}}},    // attk_range
+    {10.0, vector<pb_scalar>{               // attk_splash
+        (pb_scalar){physique, -0.5} },
+        true},
+    {10.0, vector<pb_scalar>{               // attk_range
+        (pb_scalar){physique, 0.5} },
+        true},
     
-    {1.0, vector<pb_scalar>()}     // speed
+    {1.0, vector<pb_scalar>(), false}     // speed
 };
 
 backbone::backbone() {
@@ -61,18 +72,37 @@ backbone::backbone() {
     for(int i = 0; i < PB_SIZE; i++) 
         perc[i]=0; 
     for(int i = 0; i < SB_SIZE; i++) 
-        scale[i]=1.0; 
+        scale[i]=0.0; 
 }
-int backbone::getTrue(bb stat) {
-    int r = power[stat];
+double backbone::getTrue(bb stat) {
+    double r = power[stat] * bb_conversion[stat].value;
     
-    return r; 
+    for(vector<bb_scalar>::iterator i = bb_conversion[stat].scalers.begin();
+                                    i != bb_conversion[stat].scalers.end(); ++i)
+        r = r * ( 1 + (i->swing * scale[i->scaler]));
+
+    if(bb_conversion[stat].integer_lock == true) {
+        double f =  floor(r);
+        if(f != r) if(CWB) printf("Warning - Power Waste at index %d: %f vs %f\n", stat, r, f);
+        return f;
+    }
+    else return r; 
 }
-int backbone::getTrue(pb stat) {
-    int r = perc[stat];
-    double p = r/getBasePower();
-    r = (int)(r * (1 + p * pb_conversion[stat].cost));
-    return r; 
+double backbone::getTrue(pb stat) {
+    
+    double base_percent = (double)perc[stat]/(double)getBasePower();
+    double r = base_percent * pb_conversion[stat].value;
+
+    for(vector<pb_scalar>::iterator i = pb_conversion[stat].scalers.begin();
+                                    i != pb_conversion[stat].scalers.end(); ++i)
+        r = r * ( 1 + (i->swing * scale[i->scaler]));
+
+    if(pb_conversion[stat].integer_lock == true) {
+        double f =  floor(r);
+        if(f != r) if(CWB) printf("Warning - Power Waste at index %d: %f vs %f\n", stat, r, f);
+        return f;
+    }
+    else return r; 
 }
 int backbone::getPower(bb stat) {
     return power[stat]; 

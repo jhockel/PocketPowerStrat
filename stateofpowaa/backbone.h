@@ -54,8 +54,8 @@ public:
     
 // Member Functions:
     backbone();
-    int getTrue(bb stat);
-    int getTrue(pb stat);
+    double getTrue(bb stat);
+    double getTrue(pb stat);
     double getScale(sb stat);
     int getPower(bb stat);
     int getPower(pb stat);

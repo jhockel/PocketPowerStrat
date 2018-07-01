@@ -22,9 +22,14 @@ public:
     character();
     int getPower(bb);
     int getPower(pb);
-    int getTrue(bb);
+    double getTrue(bb);
+    double getTrue(pb);
+    double getScale(sb);
     int getTotalPower();
+    
     void setPower(bb,int);
+    void setPower(pb,int);
+    void setScale(sb,double);
 };
 
 #endif
