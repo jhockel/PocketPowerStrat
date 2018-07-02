@@ -22,7 +22,9 @@ int main()
     matt.setPower(move,200);
     
     matt.setPower(true_arm,400);
-    matt.setPower(attk_range,150);
+    matt.setPower(attk_range,112);
+    
+    matt.setScale(physique, 0.70);
     
     matt.name = "COOL NAME";
     matt.health = 600;

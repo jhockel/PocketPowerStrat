@@ -83,7 +83,10 @@ double backbone::getTrue(bb stat) {
 
     if(bb_conversion[stat].integer_lock == true) {
         double f =  floor(r);
-        if(f != r) if(CWB) printf("Warning - Power Waste at index %d: %f vs %f\n", stat, r, f);
+        if((r!=0) & ((r-f) > (r/power[stat]))) if(CWB) {
+            printf("Warning - Power Waste at index %d: %f vs %f\n", stat, r, f);
+            printf("Can lower by %d\n", (int)((r-f)*power[stat]/r));
+        }
         return f;
     }
     else return r; 
@@ -99,7 +102,10 @@ double backbone::getTrue(pb stat) {
 
     if(pb_conversion[stat].integer_lock == true) {
         double f =  floor(r);
-        if(f != r) if(CWB) printf("Warning - Power Waste at index %d: %f vs %f\n", stat, r, f);
+        if((r!=0) & ((r-f) > (r/perc[stat]))) if(CWB) {
+            printf("Warning - Power Waste at index %d: %f vs %f\n", stat, r, f);
+            printf("Can lower by %d\n", (int)((r-f)*perc[stat]/r));
+        }
         return f;
     }
     else return r; 
