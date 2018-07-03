@@ -57,10 +57,10 @@ static pb_value pb_conversion[PB_SIZE] = {
     {2.0, vector<pb_scalar>(), false},     // true_arm
     
     {10.0, vector<pb_scalar>{               // attk_splash
-        (pb_scalar){physique, -0.5} },
+        (pb_scalar){physique, -0.8} },
         true},
     {10.0, vector<pb_scalar>{               // attk_range
-        (pb_scalar){physique, 0.5} },
+        (pb_scalar){physique, 0.8} },
         true},
     
     {1.0, vector<pb_scalar>(), false}     // speed
