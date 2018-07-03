@@ -51,6 +51,7 @@ static bb_value bb_conversion[BB_SIZE] = {
 
     {1.0, vector<bb_scalar>(), false}      // rand_roll
 };
+// Value for Percent Based Stats work as Recipricol of percent invest... EHHHH
 static pb_value pb_conversion[PB_SIZE] = {
     {4.0, vector<pb_scalar>(), false},     // phys_arm
     {4.0, vector<pb_scalar>(), false},     // mag_arm
@@ -75,11 +76,7 @@ backbone::backbone() {
         scale[i]=0.0; 
 }
 double backbone::getTrue(bb stat) {
-    double r = power[stat] * bb_conversion[stat].value;
-    
-    for(vector<bb_scalar>::iterator i = bb_conversion[stat].scalers.begin();
-                                    i != bb_conversion[stat].scalers.end(); ++i)
-        r = r * ( 1 + (i->swing * scale[i->scaler]));
+    double r = power[stat] * getScaledValue(stat);
 
     if(bb_conversion[stat].integer_lock == true) {
         double f =  floor(r);
@@ -91,14 +88,19 @@ double backbone::getTrue(bb stat) {
     }
     else return r; 
 }
+double backbone::getScaledValue(bb stat) {
+    double r = bb_conversion[stat].value;
+    
+    for(vector<bb_scalar>::iterator i = bb_conversion[stat].scalers.begin();
+                                    i != bb_conversion[stat].scalers.end(); ++i)
+        r = r * ( 1 + (i->swing * scale[i->scaler]));
+        
+    return r;
+}
 double backbone::getTrue(pb stat) {
     
     double base_percent = (double)perc[stat]/(double)getBasePower();
-    double r = base_percent * pb_conversion[stat].value;
-
-    for(vector<pb_scalar>::iterator i = pb_conversion[stat].scalers.begin();
-                                    i != pb_conversion[stat].scalers.end(); ++i)
-        r = r * ( 1 + (i->swing * scale[i->scaler]));
+    double r = base_percent * getScaledValue(stat);
 
     if(pb_conversion[stat].integer_lock == true) {
         double f =  floor(r);
@@ -109,6 +111,15 @@ double backbone::getTrue(pb stat) {
         return f;
     }
     else return r; 
+}
+double backbone::getScaledValue(pb stat) {
+    double r = pb_conversion[stat].value;
+
+    for(vector<pb_scalar>::iterator i = pb_conversion[stat].scalers.begin();
+                                    i != pb_conversion[stat].scalers.end(); ++i)
+        r = r * ( 1 + (i->swing * scale[i->scaler]));
+        
+    return r;
 }
 int backbone::getPower(bb stat) {
     return power[stat]; 

@@ -56,6 +56,8 @@ public:
     backbone();
     double getTrue(bb stat);
     double getTrue(pb stat);
+    double getScaledValue(bb stat);
+    double getScaledValue(pb stat);
     double getScale(sb stat);
     int getPower(bb stat);
     int getPower(pb stat);
