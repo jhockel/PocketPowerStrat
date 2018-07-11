@@ -2,6 +2,8 @@
 // This file serves as 'void main()' for the EXCEL implimentation of gameplay
 
 #include <stdio.h>
+#include <iostream>
+using namespace std;
 //using std::printf;
 
 #include "gamedata.h"
@@ -16,7 +18,7 @@
 
 int main()
 {
-
+/*
     character matt;
     
     matt.setPower(health,200);
@@ -46,13 +48,14 @@ int main()
     printf("true_arm:     %4d, %f\n",    matt.getPower(true_arm), matt.getTrue(true_arm));
     printf("attk_range:   %4d, %f\n",    matt.getPower(attk_range), matt.getTrue(attk_range));
     printf("attk_splash:  %4d, %f\n",    matt.getPower(attk_splash), matt.getTrue(attk_splash));
-    
+*/
+
 #ifdef XLIMP    
 
     // if(!libxlio::drawinputsheets()) {printf("Error with input sheet file -- exiting\n\n"); return 0;}
     
 
-    libxlio::readinchar();
+    //libxlio::readinchar();
     
     // if(!libxlio::openGameBook()) {printf("Error opeing game.xlsx file -- exiting\n\n"); return 0;}
     // printf("Game Book was opened successfully\n");
@@ -62,6 +65,48 @@ int main()
     
     // libxlio::closeGameBook(true);
 #endif
+    bool go = true;
+    int inp;
+    printf("\n\n******************* State of Powaaa *********************\n");
+    printf("Alpha test version of gameplay implimented by John Hockel\n");
+    printf("Gameplay required Microsoft Excel for interaction\n\n");
+    printf("NOTE: Excel files MUST BE CLOSED when sop.exe runs\n\n");
+    
+    
+    while(go) {
+            printf(" Select Input Index:\n");
+            printf("[1]: Draw Game Sheets (WILL OVERWRITE EXISTING FiLES)\n");
+            printf("[2]: Run Input Sheet Analytics\n");
+            printf("[3]: Play Game with Current Sheets (PvP)\n");
+            printf("[4]: Exit\n");
+            printf("[=]: ");
+            cin >> inp;
+            printf("\n");
+            switch(inp){
+                case 1:
+                    if(!libxlio::drawinputsheets()) {
+                        printf("Error with input sheet file -- exiting\n\n"); 
+                        go = false;
+                    }
+                    printf("***Game Sheets Re-Drawn***\n");
+                break;
+                case 2:
+                    printf("TODO\n");
+                break;
+                case 3:
+                    libxlio::readinchar();
+                break;
+                case 4:
+                    go = false;
+                    
+                break;
+                default:
+                    printf("Invalid Input kiddo\n\n");
+                break;
+            }
+    }
+    
+    printf("Reiterate, reapproach\n\n");
 
 	return 1;
 }

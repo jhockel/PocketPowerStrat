@@ -16,7 +16,7 @@ class libxlio {
 
 public:    
 
-// // LibXL Constants:
+    // LibXL String Constants:
     static const string GameBoard;
     static const string GameSheet;
     static const string teamAbook_;
@@ -24,7 +24,8 @@ public:
     static const string bbenum[];
     static const string pbenum[];
     static const string sbenum[];
-
+    
+    // Game Book Interactions
     static Book* gameBook;
     static Sheet* gamePage;
 

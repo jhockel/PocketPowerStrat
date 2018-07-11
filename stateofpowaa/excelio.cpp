@@ -134,7 +134,7 @@ int libxlio::clearspace(int x, int y) {
     return 0;
 }
 int libxlio::drawinputsheets(){
-    teamAbook = xlCreateXMLBook();
+    Book* teamAbook = xlCreateXMLBook();
     if(!teamAbook) return 0;
     Sheet* char_inv = teamAbook->insertSheet(0,"Char Inv");
     Format* inpBox = teamAbook->addFormat();
@@ -172,7 +172,7 @@ int libxlio::drawinputsheets(){
             char_inv->writeBlank(j,i+1,inpBox);
             char_inv->writeStr(j,i+2,"eventually formula");
         }
-        for(int j_ = 0; j_<PB_SIZE;j_++) {
+        for(int j_ = 0; j_<SB_SIZE;j_++) {
             int j = j_+BB_SIZE+PB_SIZE+CHAR_SHEET_HEADER+4;
             char_inv->writeStr(j,i,sbenum[j_].c_str());
             char_inv->writeBlank(j,i+1,inpBox);
