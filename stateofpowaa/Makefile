@@ -22,7 +22,7 @@ LIB=xl
 LFLAGS=-L. -l$(LIB) -lstdc++ 
 
 # Enumerate Source Files and subsquent Object Files
-SOURCE=main.cpp character.cpp backbone.cpp spell.cpp excelio.cpp
+SOURCE=main.cpp gamedata.cpp character.cpp backbone.cpp spell.cpp excelio.cpp
 OBJS=$(SOURCE:.cpp=.o)
 
 

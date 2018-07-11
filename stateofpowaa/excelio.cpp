@@ -22,21 +22,53 @@ using namespace libxl;
 // dX: +/-1
 // dY: Y%2? X=X|X-1 : X|X+1
 
+// Constants for sheets
+#define CHAR_SHEET_HEADER 6
+
 // Macros for the metrics: TLcR returns TOP LEFT CORNERS ROW, TLcC returns COL
 #define TLcR(RX,RY) (6+RY*8)
 #define TLcC(RX,RY) (RY%2 ? 8+RX*4 : 6+RX*4)
     
-// // LibXL Constants:
-const string GameBoard("Gameplay/game.xlsx");
-const string GameSheet("GameBoard");
-const string teamAbook("teamA.xlsx");
-const string teamBbook("teamB.xlsx");
+// Define String Constants:: 
+const string libxlio::GameBoard="Gameplay/game.xlsx";
+const string libxlio::GameSheet="GameBoard";
+const string libxlio::teamAbook_="Gameplay/teamA.xlsx";
+const string libxlio::teamBbook_="Gameplay/teamB.xlsx";
+const string libxlio::bbenum[] = {
+    "health",         // 0
+    "health_regen",   // 1
+    "mana",           // 2
+    "mana_regen",     // 3
+    "attk",           // 4
+    "move",           // 5
+    "phys_blk",       // 6
+    "mag_blk",        // 7
+    "true_blk",       // 8
+    "phys_evas",      // 9
+    "mag_evas",       // 10
+    "true_evas",      // 11
+    "rand_roll"       // 12"
+    };
+const string libxlio::pbenum[] = {
+    "phys_arm",       // 0 %% PERCENT
+    "mag_arm",        // 1 %% PERCENT
+    "true_arm",       // 2 %% PERCENT
+    "attk_splash",    // 3 %% PERCENT
+    "attk_range",     // 4 %% PERCENT
+    "speed"           // 5 %% PERCENT
+};
+const string libxlio::sbenum[] = {
+    "physique",       // 0 ## SCALAR: STRENGTH vs ACCURACY: attack SPLASH vs RANGE
+    "mana_color",     // 1 ## SCALAR: LIGHT vs DARK: 
+    "mana_weight",    // 2 ## SCALAR: HEAVY vs LIGHT:
+    "attk_splash_type"// 3 ## SCALAR: defines SPLASH, CLUSTER, or SPLIT
+};
 
-Book* gameBook = NULL;
-Sheet* gamePage = NULL;
-
+Book* libxlio::gameBook = NULL;
+Sheet* libxlio::gamePage = NULL;
+    
+    
 // Excel Interaction Implimentations
-
 int libxlio::openGameBook() {
     gameBook = xlCreateXMLBook();
     if(!gameBook) return 0;
@@ -50,8 +82,28 @@ void libxlio::closeGameBook(bool save) {
 }
 
 int libxlio::readinchar() {
+    Book* teamBook = xlCreateXMLBook();
+    int charCount = 0;
+    if(teamBook->load(teamAbook_.c_str())) {
+        Sheet* charSheet = teamBook->getSheet(0);
+        if(charSheet) {
+            for(int i_=0; i_<8; i_++){
+                int i = 4*i_+5;
+                string name(charSheet->readStr(3,i));
+                if(name.compare("")){
+                    charCount++;
+                    
+                    
+                    
+                }
+            }
+        }
+    }
     
-    return 0;
+    printf("got %d of em\n", charCount);
+    
+    teamBook->release();
+    return charCount;
 }
 int libxlio::readinspell() {
     
@@ -81,7 +133,58 @@ int libxlio::clearspace(int x, int y) {
     
     return 0;
 }
-
+int libxlio::drawinputsheets(){
+    teamAbook = xlCreateXMLBook();
+    if(!teamAbook) return 0;
+    Sheet* char_inv = teamAbook->insertSheet(0,"Char Inv");
+    Format* inpBox = teamAbook->addFormat();
+    inpBox->setBorderTop(BORDERSTYLE_THICK);
+    inpBox->setBorderLeft(BORDERSTYLE_THICK);
+    inpBox->setBorderRight(BORDERSTYLE_THICK);
+    inpBox->setBorderBottom(BORDERSTYLE_THICK);
+    
+    // COL data (i): 4*i + 4
+    // ROW data (j): j + 4              NOTE: replaced const 4 with CHAR_SHEET_HEADER
+    //               j + BB_SIZE + 6
+    //               j + BB_SIZE + PB_SIZE + 8
+    
+    for(int i_ = 0; i_<8; i_++) {
+        int i = 4*i_+4;
+        char_inv->setCol(i,i,16);
+        const string index(1,i_+49);
+        string char_i("Character ");
+        char_i = char_i+index;
+        char_inv->writeStr(2,i,char_i.c_str());
+        char_inv->writeStr(3,i,"Name");
+        char_inv->writeStr(4,i,"Starting Pos:");
+        char_inv->writeBlank(3,i+1,inpBox);
+        char_inv->writeBlank(4,i+1,inpBox);
+        
+        for(int j_ = 0; j_<BB_SIZE;j_++) {
+            int j = j_+CHAR_SHEET_HEADER;
+            char_inv->writeStr(j,i,bbenum[j_].c_str());
+            char_inv->writeBlank(j,i+1,inpBox);
+            char_inv->writeStr(j,i+2,"eventually formula");
+        }
+        for(int j_ = 0; j_<PB_SIZE;j_++) {
+            int j = j_+BB_SIZE+CHAR_SHEET_HEADER+2;
+            char_inv->writeStr(j,i,pbenum[j_].c_str());
+            char_inv->writeBlank(j,i+1,inpBox);
+            char_inv->writeStr(j,i+2,"eventually formula");
+        }
+        for(int j_ = 0; j_<PB_SIZE;j_++) {
+            int j = j_+BB_SIZE+PB_SIZE+CHAR_SHEET_HEADER+4;
+            char_inv->writeStr(j,i,sbenum[j_].c_str());
+            char_inv->writeBlank(j,i+1,inpBox);
+            char_inv->writeStr(j,i+2,"eventually formula");
+        }
+    }
+        
+    
+    if(!teamAbook->save(teamAbook_.c_str())) return 0;
+    teamAbook->release();
+    return 1;
+}
 void libxlio::drawboard() {
     Format* topB = gameBook->addFormat();
     topB->setBorderTop(BORDERSTYLE_THICK);

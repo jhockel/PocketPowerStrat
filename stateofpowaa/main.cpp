@@ -8,7 +8,7 @@
 #include "character.h"
 
 // COMMENT THIS LINE TO REMOVE EXCEL DEPENDANCIES
-//#define XLIMP
+#define XLIMP
 
 #ifdef XLIMP
 #include "excelio.h"
@@ -16,7 +16,7 @@
 
 int main()
 {
-	
+
     character matt;
     
     matt.setPower(health,200);
@@ -27,9 +27,9 @@ int main()
     matt.setPower(move,200);
     
     matt.setPower(true_arm,400);
-    matt.setPower(attk_range,88);
+    matt.setPower(attk_range,84);
     
-    matt.setScale(physique, 0.9);
+    matt.setScale(physique, 1.0);
     
     matt.name = "COOL NAME";
     matt.health = 600;
@@ -46,15 +46,21 @@ int main()
     printf("true_arm:     %4d, %f\n",    matt.getPower(true_arm), matt.getTrue(true_arm));
     printf("attk_range:   %4d, %f\n",    matt.getPower(attk_range), matt.getTrue(attk_range));
     printf("attk_splash:  %4d, %f\n",    matt.getPower(attk_splash), matt.getTrue(attk_splash));
-
+    
 #ifdef XLIMP    
-    if(!libxlio::openGameBook()) {printf("Error opeing game.xlsx file -- exiting\n\n"); return 0;}
-    printf("Game Book was opened successfully\n");
+
+    // if(!libxlio::drawinputsheets()) {printf("Error with input sheet file -- exiting\n\n"); return 0;}
     
-    libxlio::drawboard();
-    libxlio::drawspace(matt,2,2);
+
+    libxlio::readinchar();
     
-    libxlio::closeGameBook(true);
+    // if(!libxlio::openGameBook()) {printf("Error opeing game.xlsx file -- exiting\n\n"); return 0;}
+    // printf("Game Book was opened successfully\n");
+    
+    // libxlio::drawboard();
+    // libxlio::drawspace(matt,2,2);
+    
+    // libxlio::closeGameBook(true);
 #endif
 
 	return 1;

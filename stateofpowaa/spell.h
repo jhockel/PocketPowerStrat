@@ -9,7 +9,7 @@ enum sp{
     targettype,
     targetaim,
     duration,
-    rand,
+    random,
     reroll
 };
 enum tt {
@@ -31,18 +31,15 @@ public:
     tt target_type;
     ta target_aim;
     
-    union t {
+    union targ_spec {
         bb target_stat;
         pb target_perc;
-    };
+    } t;
     
-    int duration;
-    
-    double rand;
-    int reroll;
     int rand_affinity;
     
 // Member Functions:
+    spell();
     int getManaCost();
   
 };

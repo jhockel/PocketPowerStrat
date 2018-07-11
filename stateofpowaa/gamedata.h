@@ -1,4 +1,5 @@
 // File: GameData.h
+// Game Data will run excel implimentation of gameplay
 #ifndef GAMEDATA
 #define GAMEDATA
 
@@ -12,12 +13,19 @@ using std::vector;
 class gamedata {
 public:
 
-vector<character> teamA;
-vector<character> teamB;
+static vector<character> teamA;
+static vector<character> teamB;
 
-space board[BOARD_SIZE][BOARD_SIZE];
+static space board[BOARD_SIZE][BOARD_SIZE];
 
 
+// Member functions
+// Import character from file
+// import spell from file
+
+static bool placeChar(int, int, character*);
+
+static void cleanup();
 };
 
 #endif

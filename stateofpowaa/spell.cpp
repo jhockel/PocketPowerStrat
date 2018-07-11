@@ -1,6 +1,8 @@
 // File: spell.cpp
 
 #include "spell.h"
+#include <iostream>
+using namespace std;
 
 spell::spell(){
     for(int i=0; i<POWER_OPT; i++)
@@ -10,6 +12,7 @@ spell::spell(){
     target_aim = enemy;
     t.target_stat = health;
     
+    rand_affinity = 0;
 }
 
 int spell::getManaCost() {

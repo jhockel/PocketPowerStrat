@@ -4,7 +4,7 @@
 
 #define BB_SIZE 13
 #define PB_SIZE 6
-#define SB_SIZE 3
+#define SB_SIZE 4
 
 enum bb {
     health,         // 0
