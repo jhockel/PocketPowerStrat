@@ -2,6 +2,9 @@
 #ifndef BACKBONE
 #define BACKBONE
 
+#include <vector>
+using std::vector;
+
 #define BB_SIZE 13
 #define PB_SIZE 6
 #define SB_SIZE 4
@@ -15,7 +18,7 @@ enum bb {
 
     attk,           // 4
 
-    move,           // 5
+    movement,           // 5
 
     phys_blk,       // 6
     mag_blk,        // 7
@@ -45,8 +48,31 @@ enum sb {
     
 };
 
+struct bb_scalar {
+    sb scaler;
+    double swing;
+};
+struct bb_value {
+    double value;
+    vector<bb_scalar> scalers;
+    bool integer_lock;
+};
+struct pb_scalar {
+    sb scaler;
+    double swing;
+};
+struct pb_value {
+    double value;
+    vector<pb_scalar> scalers;
+    bool integer_lock;
+};
+
 class backbone {
 public:
+
+    static bb_value bb_conversion[BB_SIZE];
+    static pb_value pb_conversion[PB_SIZE];
+    
 // Members:
     int power[BB_SIZE];     // Power Array for Base Stats
     int perc[PB_SIZE];      // Power Array for Percentage Based stats

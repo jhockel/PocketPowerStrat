@@ -1,13 +1,17 @@
 // File: excelio.cpp
 // Imp file for excelio functions
 
-#include "character.h"
+#include "excelio.h"
+
 #include <iostream>
+#include <stdio.h>
 #include <string>
 using std::string;
 #include "libxl.h"
 using namespace libxl;
-#include "excelio.h"
+
+#include "character.h"
+#include "backbone.h"
 
 // KEY METRICS:
 
@@ -23,7 +27,7 @@ using namespace libxl;
 // dY: Y%2? X=X|X-1 : X|X+1
 
 // Constants for sheets
-#define CHAR_SHEET_HEADER 6
+#define CHAR_SHEET_HEADER 7
 
 // Macros for the metrics: TLcR returns TOP LEFT CORNERS ROW, TLcC returns COL
 #define TLcR(RX,RY) (6+RY*8)
@@ -89,10 +93,10 @@ int libxlio::readinchar() {
         if(charSheet) {
             for(int i_=0; i_<8; i_++){
                 int i = 4*i_+5;
-                string name(charSheet->readStr(3,i));
-                if(name.compare("")){
+                const char* name_ = charSheet->readStr(3,i);
+                if(name_ != NULL){
                     charCount++;
-                    
+                    string name(name_);
                     
                     
                 }
@@ -126,7 +130,7 @@ int libxlio::drawspace(character& c, int x, int y) {
     gamePage->writeStr(row+3,col+2,"ATTK");
     gamePage->writeNum(row+3,col+3,c.getTrue(attk));
     gamePage->writeStr(row+4,col+2,"MV");
-    gamePage->writeNum(row+4,col+3,c.getTrue(move));
+    gamePage->writeNum(row+4,col+3,c.getTrue(movement));
     return 1;
 }
 int libxlio::clearspace(int x, int y) {
@@ -148,6 +152,41 @@ int libxlio::drawinputsheets(){
     //               j + BB_SIZE + 6
     //               j + BB_SIZE + PB_SIZE + 8
     
+    // Draw Initial Conversion Stats:
+    {   
+        int i = 1;
+        char_inv->setCol(i,i+1,16);
+        char_inv->writeStr(3,i,"Team Total:");
+        string tt_formula("SUM(");
+        for(int i_ = 0; i_<8; i_++) {
+            int i = 4*i_+5;
+            tt_formula += getCellStr(2,i);
+            if(i_ < 7) tt_formula += ',';
+            else tt_formula += ')';
+        }
+        char_inv->writeFormula(3,i+1,tt_formula.c_str());
+        char_inv->writeStr(5,i+1,"Stat Conversion:");
+        
+        for(int j_ = 0; j_<BB_SIZE;j_++) {
+            int j = j_+CHAR_SHEET_HEADER;
+            char_inv->writeStr(j,i,bbenum[j_].c_str());
+            char_inv->writeNum(j,i+1,backbone::bb_conversion[j_].value);
+            
+        }
+        for(int j_ = 0; j_<PB_SIZE;j_++) {
+            int j = j_+BB_SIZE+CHAR_SHEET_HEADER+2;
+            char_inv->writeStr(j,i,pbenum[j_].c_str());
+            char_inv->writeNum(j,i+1,backbone::pb_conversion[j_].value);
+        }
+        for(int j_ = 0; j_<SB_SIZE;j_++) {
+            int j = j_+BB_SIZE+PB_SIZE+CHAR_SHEET_HEADER+4;
+            char_inv->writeStr(j,i,sbenum[j_].c_str());
+            char_inv->writeStr(j,i+1,"Free: [-1,1]");
+            
+        }
+    }
+    
+    // Draw Per Capita Input
     for(int i_ = 0; i_<8; i_++) {
         int i = 4*i_+4;
         char_inv->setCol(i,i,16);
@@ -155,6 +194,13 @@ int libxlio::drawinputsheets(){
         string char_i("Character ");
         char_i = char_i+index;
         char_inv->writeStr(2,i,char_i.c_str());
+        string ct_formula("SUM(" + getCellStr(CHAR_SHEET_HEADER,i+1) + ':' 
+                                    + getCellStr(CHAR_SHEET_HEADER+BB_SIZE-1,i+1) + ","
+                                    + getCellStr(CHAR_SHEET_HEADER+BB_SIZE+2,i+1) + ":"
+                                    + getCellStr(CHAR_SHEET_HEADER+BB_SIZE+PB_SIZE+1,i+1) + ","
+                                    + getCellStr(CHAR_SHEET_HEADER+BB_SIZE+PB_SIZE+4,i+1) + ":"
+                                    + getCellStr(CHAR_SHEET_HEADER+BB_SIZE+PB_SIZE+SB_SIZE+3,i+1) + ")");
+        char_inv->writeFormula(2,i+1,ct_formula.c_str());
         char_inv->writeStr(3,i,"Name");
         char_inv->writeStr(4,i,"Starting Pos:");
         char_inv->writeBlank(3,i+1,inpBox);
@@ -164,7 +210,8 @@ int libxlio::drawinputsheets(){
             int j = j_+CHAR_SHEET_HEADER;
             char_inv->writeStr(j,i,bbenum[j_].c_str());
             char_inv->writeBlank(j,i+1,inpBox);
-            char_inv->writeStr(j,i+2,"eventually formula");
+            string formula(getCellStr(j,i+1)+"*"+getCellStr(j,2));
+            char_inv->writeFormula(j,i+2,formula.c_str());
         }
         for(int j_ = 0; j_<PB_SIZE;j_++) {
             int j = j_+BB_SIZE+CHAR_SHEET_HEADER+2;
@@ -181,7 +228,7 @@ int libxlio::drawinputsheets(){
     }
         
     
-    if(!teamAbook->save(teamAbook_.c_str())) return 0;
+    teamAbook->save(teamAbook_.c_str());
     teamAbook->release();
     return 1;
 }
@@ -252,4 +299,25 @@ void libxlio::drawboard() {
             gamePage->writeStr(row+7,col,s.c_str());
         }
     
+
+}
+
+string libxlio::getCellStr(int y,int x){
+    int temp = x+1;
+    string col("");
+    while(temp > 0){
+        if(temp == 26) {
+            col = 'Z' + col;
+            temp--;
+        } else
+            col = (char)(temp%26+64) + col;
+        temp = temp/26;
+    }
+    string row("");
+    temp = y+1;
+    while(temp > 0) {
+        row = (char)(temp%10+48) + row;
+        temp = temp/10;
+    }
+    return (col+row);
 }

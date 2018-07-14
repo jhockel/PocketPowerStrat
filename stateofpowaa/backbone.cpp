@@ -11,26 +11,7 @@ using namespace std;
 #include <stdio.h>
 #define CWB 1
 
-struct bb_scalar {
-    sb scaler;
-    double swing;
-};
-struct bb_value {
-    double value;
-    vector<bb_scalar> scalers;
-    bool integer_lock;
-};
-struct pb_scalar {
-    sb scaler;
-    double swing;
-};
-struct pb_value {
-    double value;
-    vector<pb_scalar> scalers;
-    bool integer_lock;
-};
-
-static bb_value bb_conversion[BB_SIZE] = {
+bb_value backbone::bb_conversion[BB_SIZE] = {
     {5.0, vector<bb_scalar>(), true},     // health,         
     {2.0, vector<bb_scalar>(), true},     // health_regen,
     
@@ -52,7 +33,7 @@ static bb_value bb_conversion[BB_SIZE] = {
     {1.0, vector<bb_scalar>(), false}      // rand_roll
 };
 // Value for Percent Based Stats work as Recipricol of percent invest... EHHHH
-static pb_value pb_conversion[PB_SIZE] = {
+pb_value backbone::pb_conversion[PB_SIZE] = {
     {4.0, vector<pb_scalar>(), false},     // phys_arm
     {4.0, vector<pb_scalar>(), false},     // mag_arm
     {2.0, vector<pb_scalar>(), false},     // true_arm

@@ -42,6 +42,9 @@ public:
     static void drawboard();
     static int drawinputsheets();
     
+    // helper function
+    static string getCellStr(int,int);
+    
 };
 
 #endif

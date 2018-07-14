@@ -4,21 +4,15 @@
 #include <stdio.h>
 #include <iostream>
 using namespace std;
-//using std::printf;
 
 #include "gamedata.h"
-#include "character.h"
-
-// COMMENT THIS LINE TO REMOVE EXCEL DEPENDANCIES
-#define XLIMP
-
-#ifdef XLIMP
 #include "excelio.h"
-#endif
+#include "character.h"
+#include "backbone.h"
+
 
 int main()
 {
-/*
     character matt;
     
     matt.setPower(health,200);
@@ -26,7 +20,7 @@ int main()
     matt.setPower(mana,200);
     matt.setPower(mana_regen,200);
     matt.setPower(attk,500);
-    matt.setPower(move,200);
+    matt.setPower(movement,200);
     
     matt.setPower(true_arm,400);
     matt.setPower(attk_range,84);
@@ -48,9 +42,7 @@ int main()
     printf("true_arm:     %4d, %f\n",    matt.getPower(true_arm), matt.getTrue(true_arm));
     printf("attk_range:   %4d, %f\n",    matt.getPower(attk_range), matt.getTrue(attk_range));
     printf("attk_splash:  %4d, %f\n",    matt.getPower(attk_splash), matt.getTrue(attk_splash));
-*/
-
-#ifdef XLIMP    
+    
 
     // if(!libxlio::drawinputsheets()) {printf("Error with input sheet file -- exiting\n\n"); return 0;}
     
@@ -64,17 +56,17 @@ int main()
     // libxlio::drawspace(matt,2,2);
     
     // libxlio::closeGameBook(true);
-#endif
+    
     bool go = true;
     int inp;
-    printf("\n\n******************* State of Powaaa *********************\n");
+    printf("\n\n******************* State of Powaaa *********************\n\n");
     printf("Alpha test version of gameplay implimented by John Hockel\n");
     printf("Gameplay required Microsoft Excel for interaction\n\n");
-    printf("NOTE: Excel files MUST BE CLOSED when sop.exe runs\n\n");
+    printf("NOTE: Excel files MUST BE CLOSED when sop.exe functions run\n");
     
     
     while(go) {
-            printf(" Select Input Index:\n");
+            printf("\n Select Input Index:\n");
             printf("[1]: Draw Game Sheets (WILL OVERWRITE EXISTING FiLES)\n");
             printf("[2]: Run Input Sheet Analytics\n");
             printf("[3]: Play Game with Current Sheets (PvP)\n");
@@ -88,7 +80,7 @@ int main()
                         printf("Error with input sheet file -- exiting\n\n"); 
                         go = false;
                     }
-                    printf("***Game Sheets Re-Drawn***\n");
+                    printf("***Game Sheet Templates Re-Drawn***\n");
                 break;
                 case 2:
                     printf("TODO\n");
@@ -98,10 +90,11 @@ int main()
                 break;
                 case 4:
                     go = false;
-                    
                 break;
                 default:
                     printf("Invalid Input kiddo\n\n");
+                    cin.clear();
+                    cin.ignore(1000,'\n');
                 break;
             }
     }
