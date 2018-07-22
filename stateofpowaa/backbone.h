@@ -72,6 +72,7 @@ public:
 
     static bb_value bb_conversion[BB_SIZE];
     static pb_value pb_conversion[PB_SIZE];
+    static bool sb_int_lock[SB_SIZE];
     
 // Members:
     int power[BB_SIZE];     // Power Array for Base Stats

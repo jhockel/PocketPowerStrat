@@ -38,6 +38,8 @@ const string libxlio::GameBoard="Gameplay/game.xlsx";
 const string libxlio::GameSheet="GameBoard";
 const string libxlio::teamAbook_="Gameplay/teamA.xlsx";
 const string libxlio::teamBbook_="Gameplay/teamB.xlsx";
+
+// Character String Constants
 const string libxlio::bbenum[] = {
     "health",         // 0
     "health_regen",   // 1
@@ -66,6 +68,20 @@ const string libxlio::sbenum[] = {
     "mana_color",     // 1 ## SCALAR: LIGHT vs DARK: 
     "mana_weight",    // 2 ## SCALAR: HEAVY vs LIGHT:
     "attk_splash_type"// 3 ## SCALAR: defines SPLASH, CLUSTER, or SPLIT
+};
+
+// Spell String Constants
+const string libxlio::spenum[] = {
+    "power",
+    "reroll"
+};
+const string libxlio::sppenum[] = {
+    "targettype",
+    "targetaim",
+    "duration"
+};
+const string libxlio::ssenum[] = {
+    "spell_rand"
 };
 
 Book* libxlio::gameBook = NULL;
@@ -140,13 +156,17 @@ int libxlio::clearspace(int x, int y) {
 int libxlio::drawinputsheets(){
     Book* teamAbook = xlCreateXMLBook();
     if(!teamAbook) return 0;
-    Sheet* char_inv = teamAbook->insertSheet(0,"Char Inv");
+    
     Format* inpBox = teamAbook->addFormat();
     inpBox->setBorderTop(BORDERSTYLE_THICK);
     inpBox->setBorderLeft(BORDERSTYLE_THICK);
     inpBox->setBorderRight(BORDERSTYLE_THICK);
     inpBox->setBorderBottom(BORDERSTYLE_THICK);
     
+    // Draw CHARACTER INPUT SHEET
+    
+    Sheet* char_inv = teamAbook->insertSheet(0,"Char Inv");
+
     // COL data (i): 4*i + 4
     // ROW data (j): j + 4              NOTE: replaced const 4 with CHAR_SHEET_HEADER
     //               j + BB_SIZE + 6
@@ -181,7 +201,8 @@ int libxlio::drawinputsheets(){
         for(int j_ = 0; j_<SB_SIZE;j_++) {
             int j = j_+BB_SIZE+PB_SIZE+CHAR_SHEET_HEADER+4;
             char_inv->writeStr(j,i,sbenum[j_].c_str());
-            char_inv->writeStr(j,i+1,"Free: [-1,1]");
+            string inst((backbone::sb_int_lock[j_]? "Free: nonneg int":"Free: [-1,1]"));
+            char_inv->writeStr(j,i+1,inst);
             
         }
     }
@@ -197,9 +218,7 @@ int libxlio::drawinputsheets(){
         string ct_formula("SUM(" + getCellStr(CHAR_SHEET_HEADER,i+1) + ':' 
                                     + getCellStr(CHAR_SHEET_HEADER+BB_SIZE-1,i+1) + ","
                                     + getCellStr(CHAR_SHEET_HEADER+BB_SIZE+2,i+1) + ":"
-                                    + getCellStr(CHAR_SHEET_HEADER+BB_SIZE+PB_SIZE+1,i+1) + ","
-                                    + getCellStr(CHAR_SHEET_HEADER+BB_SIZE+PB_SIZE+4,i+1) + ":"
-                                    + getCellStr(CHAR_SHEET_HEADER+BB_SIZE+PB_SIZE+SB_SIZE+3,i+1) + ")");
+                                    + getCellStr(CHAR_SHEET_HEADER+BB_SIZE+PB_SIZE+1,i+1) + ")");
         char_inv->writeFormula(2,i+1,ct_formula.c_str());
         char_inv->writeStr(3,i,"Name");
         char_inv->writeStr(4,i,"Starting Pos:");
@@ -222,12 +241,12 @@ int libxlio::drawinputsheets(){
         for(int j_ = 0; j_<SB_SIZE;j_++) {
             int j = j_+BB_SIZE+PB_SIZE+CHAR_SHEET_HEADER+4;
             char_inv->writeStr(j,i,sbenum[j_].c_str());
-            char_inv->writeBlank(j,i+1,inpBox);
+            char_inv->writeNum(j,i+1,0,inpBox);
             char_inv->writeStr(j,i+2,"eventually formula");
         }
     }
         
-    
+    // Close book
     teamAbook->save(teamAbook_.c_str());
     teamAbook->release();
     return 1;

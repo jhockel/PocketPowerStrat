@@ -5,8 +5,12 @@
 using namespace std;
 
 spell::spell(){
-    for(int i=0; i<POWER_OPT; i++)
-        power_opt[i] = 0;
+    for(int i=0; i<SP_SIZE; i++)
+        spell_power[i] = 0;
+    for(int i=0; i<SPP_SIZE; i++)
+        spell_perc[i] = 0;
+    for(int i=0; i<SS_SIZE; i++)
+        spell_scale[i] = 0;
     target = NULL;
     target_type = character;
     target_aim = enemy;
@@ -17,7 +21,7 @@ spell::spell(){
 
 int spell::getManaCost() {
     int r;
-    for(int i=0; i<POWER_OPT; i++)
-        r += power_opt[i];
+    for(int i=0; i<SP_SIZE; i++)
+        r += spell_power[i];
     return r;
 }

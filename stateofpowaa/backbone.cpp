@@ -47,6 +47,12 @@ pb_value backbone::pb_conversion[PB_SIZE] = {
     
     {1.0, vector<pb_scalar>(), false}     // speed
 };
+bool backbone::sb_int_lock[SB_SIZE] = {
+    false,  // physique,       // 0 ## SCALAR: STRENGTH vs ACCURACY: attack SPLASH vs RANGE
+    false,  // mana_color,     // 1 ## SCALAR: LIGHT vs DARK: 
+    false,  // mana_weight,    // 2 ## SCALAR: HEAVY vs LIGHT:
+    true    // attk_splash_type// 3 ## SCALAR: defines SPLASH, CLUSTER, or SPLIT
+};
 
 backbone::backbone() {
     for(int i = 0; i < BB_SIZE; i++) 

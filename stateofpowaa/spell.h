@@ -4,13 +4,20 @@
 
 #include "backbone.h"
 
-#define POWER_OPT 5
+#define SP_SIZE 2
+#define SPP_SIZE 3
+#define SS_SIZE 1
 enum sp{
+    power,
+    reroll
+};
+enum spp {
     targettype,
     targetaim,
-    duration,
-    random,
-    reroll
+    duration
+};
+enum ss {
+    spell_rand
 };
 enum tt {
     character,
@@ -25,7 +32,9 @@ enum ta {
 class spell {
 public:
 
-    int power_opt[POWER_OPT];
+    int spell_power[SP_SIZE];
+    int spell_perc[SPP_SIZE];
+    double spell_scale[SS_SIZE];
     
     void* target;
     tt target_type;

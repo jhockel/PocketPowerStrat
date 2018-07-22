@@ -7,6 +7,7 @@
 #include "libxl.h"
 using namespace libxl;
 #include "character.h"
+#include "spell.h"
 #include <string>
 using std::string;
 #include <vector>
@@ -21,9 +22,14 @@ public:
     static const string GameSheet;
     static const string teamAbook_;
     static const string teamBbook_;
+    
     static const string bbenum[];
     static const string pbenum[];
     static const string sbenum[];
+    
+    static const string spenum[];
+    static const string sppenum[];
+    static const string ssenum[];
     
     // Game Book Interactions
     static Book* gameBook;
