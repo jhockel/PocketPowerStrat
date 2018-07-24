@@ -5,49 +5,48 @@
 #include <iostream>
 using namespace std;
 
+#include "character.h"
 #include "gamedata.h"
 #include "excelio.h"
-#include "character.h"
-#include "backbone.h"
 
 
 int main()
 {
-    // character matt;
+    character matt;
     
-    // matt.setPower(health,200);
-    // matt.setPower(health_regen,200);
-    // matt.setPower(mana,200);
-    // matt.setPower(mana_regen,200);
-    // matt.setPower(attk,500);
-    // matt.setPower(movement,200);
+    matt.setPower(health,200);
+    matt.setPower(health_regen,200);
+    matt.setPower(mana,200);
+    matt.setPower(mana_regen,200);
+    matt.setPower(attk,500);
+    matt.setPower(movement,200);
     
-    // matt.setPower(true_arm,400);
-    // matt.setPower(attk_range,84);
+    matt.setPower(true_arm,400);
+    matt.setPower(attk_range,84);
     
-    // matt.setScale(physique, 1.0);
+    matt.setScale(physique, 1.0);
     
-    // matt.name = "COOL NAME";
-    // matt.health = 600;
-    // matt.mana = 350;
+    matt.name = "COOL NAME";
+    matt.health = 600;
+    matt.mana = 350;
     
-    // printf("SABA \n");
-    // printf("Total: %d Base: %d\n", matt.b.getTotalPower(), matt.b.getBasePower());
-    // printf("health:       %4d, %f\n",    matt.getPower(health), matt.getTrue(health));
-    // printf("health_regen: %4d, %f\n",    matt.getPower(health_regen), matt.getTrue(health_regen));
-    // printf("mana:         %4d, %f\n",    matt.getPower(mana), matt.getTrue(mana));
-    // printf("mana_regen:   %4d, %f\n",    matt.getPower(mana_regen), matt.getTrue(mana_regen));
+    printf("SABA \n");
+    printf("Total: %d Base: %d\n", matt.b.getTotalPower(), matt.b.getBasePower());
+    printf("health:       %4d, %f\n",    matt.getPower(health), matt.getTrue(health));
+    printf("health_regen: %4d, %f\n",    matt.getPower(health_regen), matt.getTrue(health_regen));
+    printf("mana:         %4d, %f\n",    matt.getPower(mana), matt.getTrue(mana));
+    printf("mana_regen:   %4d, %f\n",    matt.getPower(mana_regen), matt.getTrue(mana_regen));
     
-    // printf("\nPerc Check:\n");
-    // printf("true_arm:     %4d, %f\n",    matt.getPower(true_arm), matt.getTrue(true_arm));
-    // printf("attk_range:   %4d, %f\n",    matt.getPower(attk_range), matt.getTrue(attk_range));
-    // printf("attk_splash:  %4d, %f\n",    matt.getPower(attk_splash), matt.getTrue(attk_splash));
+    printf("\nPerc Check:\n");
+    printf("true_arm:     %4d, %f\n",    matt.getPower(true_arm), matt.getTrue(true_arm));
+    printf("attk_range:   %4d, %f\n",    matt.getPower(attk_range), matt.getTrue(attk_range));
+    printf("attk_splash:  %4d, %f\n",    matt.getPower(attk_splash), matt.getTrue(attk_splash));
     
 
     // if(!libxlio::drawinputsheets()) {printf("Error with input sheet file -- exiting\n\n"); return 0;}
     
 
-    //libxlio::readinchar();
+    // libxlio::readinchar();
     
     // if(!libxlio::openGameBook()) {printf("Error opeing game.xlsx file -- exiting\n\n"); return 0;}
     // printf("Game Book was opened successfully\n");

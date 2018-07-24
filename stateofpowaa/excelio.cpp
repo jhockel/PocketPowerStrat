@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string>
 using std::string;
+using std::to_string;
 #include "libxl.h"
 using namespace libxl;
 
@@ -39,7 +40,7 @@ const string libxlio::GameSheet="GameBoard";
 const string libxlio::teamAbook_="Gameplay/teamA.xlsx";
 const string libxlio::teamBbook_="Gameplay/teamB.xlsx";
 
-// Character String Constants
+// character String Constants
 const string libxlio::bbenum[] = {
     "health",         // 0
     "health_regen",   // 1
@@ -163,9 +164,10 @@ int libxlio::drawinputsheets(){
     inpBox->setBorderRight(BORDERSTYLE_THICK);
     inpBox->setBorderBottom(BORDERSTYLE_THICK);
     
-    // Draw CHARACTER INPUT SHEET
+    // Draw character INPUT SHEET
     
-    Sheet* char_inv = teamAbook->insertSheet(0,"Char Inv");
+    Sheet* char_inv = teamAbook->insertSheet(0,"Character List");
+    Sheet* spell_inv = teamAbook->insertSheet(0,"Spell Book");
 
     // COL data (i): 4*i + 4
     // ROW data (j): j + 4              NOTE: replaced const 4 with CHAR_SHEET_HEADER
@@ -202,7 +204,7 @@ int libxlio::drawinputsheets(){
             int j = j_+BB_SIZE+PB_SIZE+CHAR_SHEET_HEADER+4;
             char_inv->writeStr(j,i,sbenum[j_].c_str());
             string inst((backbone::sb_int_lock[j_]? "Free: nonneg int":"Free: [-1,1]"));
-            char_inv->writeStr(j,i+1,inst);
+            char_inv->writeStr(j,i+1,inst.c_str());
             
         }
     }
@@ -212,7 +214,7 @@ int libxlio::drawinputsheets(){
         int i = 4*i_+4;
         char_inv->setCol(i,i,16);
         const string index(1,i_+49);
-        string char_i("Character ");
+        string char_i("character ");
         char_i = char_i+index;
         char_inv->writeStr(2,i,char_i.c_str());
         string ct_formula("SUM(" + getCellStr(CHAR_SHEET_HEADER,i+1) + ':' 
@@ -230,13 +232,27 @@ int libxlio::drawinputsheets(){
             char_inv->writeStr(j,i,bbenum[j_].c_str());
             char_inv->writeBlank(j,i+1,inpBox);
             string formula(getCellStr(j,i+1)+"*"+getCellStr(j,2));
+            for(vector<bb_scalar>::iterator it = backbone::bb_conversion[j_].scalers.begin();
+                                    it != backbone::bb_conversion[j_].scalers.end(); ++it) {
+                formula = formula +"*(1+("+to_string(it->swing)+"*"+getCellStr((int)(it->scaler)+BB_SIZE+PB_SIZE+CHAR_SHEET_HEADER+4,i+1)+"))";
+            }
+            if(backbone::bb_conversion[j_].integer_lock)
+                formula = "FLOOR("+formula+",1)";
             char_inv->writeFormula(j,i+2,formula.c_str());
         }
         for(int j_ = 0; j_<PB_SIZE;j_++) {
             int j = j_+BB_SIZE+CHAR_SHEET_HEADER+2;
             char_inv->writeStr(j,i,pbenum[j_].c_str());
             char_inv->writeBlank(j,i+1,inpBox);
-            char_inv->writeStr(j,i+2,"eventually formula");
+            string formula(getCellStr(j,i+1)+"*"+getCellStr(j,2));
+            for(vector<pb_scalar>::iterator it = backbone::pb_conversion[j_].scalers.begin();
+                                    it != backbone::pb_conversion[j_].scalers.end(); ++it) {
+                formula = formula +"*(1+("+to_string(it->swing)+"*"+getCellStr((int)(it->scaler)+BB_SIZE+PB_SIZE+CHAR_SHEET_HEADER+4,i+1)+"))";
+            }
+            formula = formula + "/SUM("+getCellStr(CHAR_SHEET_HEADER,i+1)+":"+getCellStr(CHAR_SHEET_HEADER+BB_SIZE-1,i+1)+")";
+            if(backbone::pb_conversion[j_].integer_lock)
+                formula = "FLOOR("+formula+",1)";
+            char_inv->writeFormula(j,i+2,formula.c_str());
         }
         for(int j_ = 0; j_<SB_SIZE;j_++) {
             int j = j_+BB_SIZE+PB_SIZE+CHAR_SHEET_HEADER+4;
@@ -247,7 +263,7 @@ int libxlio::drawinputsheets(){
     }
         
     // Close book
-    teamAbook->save(teamAbook_.c_str());
+    if(!teamAbook->save(teamAbook_.c_str())) printf("Error on Save\n");
     teamAbook->release();
     return 1;
 }

@@ -19,7 +19,7 @@ public:
     
     
     // Member Functions and Accessors
-    character();
+    //character();
     int getPower(bb);
     int getPower(pb);
     double getTrue(bb);

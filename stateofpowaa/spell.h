@@ -5,13 +5,14 @@
 #include "backbone.h"
 
 #define SP_SIZE 2
-#define SPP_SIZE 3
+#define SPP_SIZE 4
 #define SS_SIZE 1
 enum sp{
     power,
     reroll
 };
 enum spp {
+    range,
     targettype,
     targetaim,
     duration
@@ -20,8 +21,8 @@ enum ss {
     spell_rand
 };
 enum tt {
-    character,
-    space
+    targ_character,
+    targ_space
 };
 enum ta {
     neutral,

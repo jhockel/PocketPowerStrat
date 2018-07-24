@@ -12,7 +12,7 @@ spell::spell(){
     for(int i=0; i<SS_SIZE; i++)
         spell_scale[i] = 0;
     target = NULL;
-    target_type = character;
+    target_type = targ_character;
     target_aim = enemy;
     t.target_stat = health;
     

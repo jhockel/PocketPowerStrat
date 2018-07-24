@@ -2,9 +2,9 @@
 
 #include "character.h"
 
-character::character() {
-    //for(int i = 0; i < BB_SIZE; i++) b.power[i]=0;
-}
+// character::character() {
+    // //for(int i = 0; i < BB_SIZE; i++) b.power[i]=0;
+// }
 
 int character::getPower(bb stat){
     return b.getPower(stat);
